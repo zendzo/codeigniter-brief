@@ -27,8 +27,10 @@ $config = [
 		]
 		],
 	'auth/login' => [
-		'field' => 'email', 
-		'label' => 'Email Address', 
-		'rules' => 'required|valid_email|trim'
+		[
+			'field' => 'email',
+			'label' => 'Email Address',
+			'rules' => 'required|valid_email|trim'
+		]
 	]
 ];

@@ -6,11 +6,12 @@ class Auth extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-    $this->load->library('form_validation');
   }
 
   public function login()
   {
+    $this->_islogedin();
+
     if ($this->form_validation->run() == false) {
       $this->load->view('auth/login');
     } else {
@@ -49,6 +50,8 @@ class Auth extends CI_Controller
 
   public function register()
   {
+    $this->_islogedin();
+    
     if ($this->form_validation->run() == false) {
       $this->load->view('auth/register');
     } else {
@@ -74,5 +77,13 @@ class Auth extends CI_Controller
     $this->session->unset_userdata('role_id');
     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">You are now loged out!</div>');
     redirect('login');
+  }
+
+  private function _islogedin()
+  {
+    $this->load->library('form_validation');
+    if ($this->session->userdata('email')) {
+      redirect('user');
+    }
   }
 }
