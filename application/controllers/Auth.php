@@ -11,8 +11,6 @@ class Auth extends CI_Controller
 
   public function login()
   {
-    $this->form_validation->set_rules('email', 'Email Address', 'required|valid_email|trim');
-    $this->form_validation->set_rules('password', 'Password', 'required|trim');
     if ($this->form_validation->run() == false) {
       $this->load->view('auth/login');
     } else {
@@ -51,8 +49,6 @@ class Auth extends CI_Controller
 
   public function register()
   {
-    $this->rules();
-
     if ($this->form_validation->run() == false) {
       $this->load->view('auth/register');
     } else {
@@ -78,13 +74,5 @@ class Auth extends CI_Controller
     $this->session->unset_userdata('role_id');
     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">You are now loged out!</div>');
     redirect('login');
-  }
-
-  public function rules()
-  {
-    $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
-    $this->form_validation->set_rules('email', 'Email Address', 'required|valid_email|is_unique[users.email]|trim', ['is_unique', 'This email is registered!']);
-    $this->form_validation->set_rules('password', 'Password', 'required|matches[password_confirmation]|min_length[8]|trim');
-    $this->form_validation->set_rules('password_confirmation', 'Password Confirmation', 'required|matches[password]|min_length[8]|trim');
   }
 }
